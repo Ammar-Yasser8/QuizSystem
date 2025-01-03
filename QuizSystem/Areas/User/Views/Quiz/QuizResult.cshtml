@@ -1,0 +1,31 @@
+﻿@using Quiz.Entities.ViewModels
+@model QuizResultViewModel
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<div class="max-w-6xl mx-auto">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center mb-4">Quiz Results</h2>
+
+        <div class="text-center mb-4">
+            <h3 class="text-2xl font-semibold">@Model.Quiz.Title</h3>
+            <p class="text-gray-600">@Model.Quiz.Description</p>
+        </div>
+
+        <div class="my-6">
+            <h4 class="text-xl font-semibold">Your Score: @Model.Score / @(Model.TotalQuestions > 0 ? Model.TotalQuestions : "N/A")</h4>
+            <div class="mt-4">
+                <p class="text-gray-600">You answered @Model.Score out of @(Model.TotalQuestions > 0 ? Model.TotalQuestions : "N/A") questions correctly!</p>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="@Url.Action("Index", "Quiz", new { area = "User" })" class="text-blue-500 hover:underline">Back to Quizzes</a>
+            <a href="@Url.Action("TopScores", "Home", new { area = "Admin", quizId = Model.Quiz.Id })"
+            class="text-blue-500 hover:underline mt-2 block">
+                View Top 10 Scores
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Quiz.Entities.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body class="bg-blue-50">
+    <div class="min-h-screen p-8">
+        <!-- Header with Top Menu -->
+        <header class="fixed top-0 left-0 w-full bg-indigo-600 shadow-lg z-50">
+            <div class="max-w-7xl mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <!-- Logo/Brand Name -->
+                    <a href="/" class="text-white text-3xl font-semibold">
+                        🌟 Fun Learning Quizzes 🌟
+                    </a>
+
+                    <!-- Navigation Menu -->
+                    <div class="space-x-6">
+                        <a href="/" class="text-white text-lg font-semibold hover:text-indigo-300">Home</a>
+
+                        @if (SignInManager.IsSignedIn(User))
+
+                        {
+                            <!-- Logout Button -->
+                            <form asp-area="Admin" asp-controller="Account" asp-action="Logout" method="post" class="inline-block">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    Logout
+                                </button>
+                            </form>
+
+                            <!-- Admin Dashboard Link -->
+                            @if (User.IsInRole("Admin"))
+
+                            {
+                                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="text-white text-lg font-semibold hover:text-indigo-300">Dashboard</a>
+                            }
+                        }
+
+                        else
+
+                        {
+                            <!-- Login and Register Links -->
+                            <a asp-area="Admin" asp-controller="Account" asp-action="Login" class="text-white text-lg font-semibold hover:text-indigo-300">Login</a>
+                            <a asp-area="Admin" asp-controller="Account" asp-action="Register" class="text-white text-lg font-semibold hover:text-indigo-300">Register</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="pt-24">
+            <!-- Padding for the content below the fixed header -->
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 text-center text-gray-600">
+            <p class="text-lg">Ready to learn? Pick your quiz and let's get started! 🚀</p>
+        </footer>
+    </div>
+</body>
+</html>

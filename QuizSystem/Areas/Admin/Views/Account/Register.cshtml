@@ -1,0 +1,95 @@
+﻿@model Quiz.Entities.ViewModels.RegisterViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidsLearn - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 flex items-center justify-center p-4">
+    <!-- Main Card -->
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-8 relative overflow-hidden">
+        <!-- Header -->
+        <div class="flex items-center justify-center mb-6">
+            <i class="bx bxs-graduation text-4xl text-blue-500 mr-3"></i>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                KidsLearn
+            </h1>
+        </div>
+        <p class="text-gray-600 text-center mb-6">
+            Start your amazing learning journey today!
+        </p>
+
+        @* Validation Summary *@
+        @if (!ViewData.ModelState.IsValid)
+
+        {
+            <div class="text-red-600 mb-4 text-sm">
+                @Html.ValidationSummary(false, "", new { @class = "text-red-500" })
+            </div>
+        }
+
+        @* Registration Form *@
+        <form asp-action="Register" method="post" class="space-y-6">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2" for="name">
+                    <i class="bx bxs-book text-blue-500 mr-2"></i>
+                    Name
+                </label>
+                <input type="text" id="name" name="Name" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors" required />
+                <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.Name)</span>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-medium mb-2" for="age">
+                    <i class="bx bxs-rocket text-purple-500 mr-2"></i>
+                    Age
+                </label>
+                <input type="number" id="age" name="Age" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-colors" required />
+                <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.Age)</span>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-medium mb-2" for="email">
+                    <i class="bx bxs-star text-yellow-500 mr-2"></i>
+                    Email
+                </label>
+                <input type="email" id="email" name="Email" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-colors" required />
+                <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.Email)</span>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-medium mb-2" for="password">
+                    <i class="bx bx-lock-alt text-pink-500 mr-2"></i>
+                    Password
+                </label>
+                <input type="password" id="password" name="Password" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-colors" required />
+                <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.Password)</span>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-medium mb-2" for="confirmPassword">
+                    <i class="bx bx-lock-alt text-pink-500 mr-2"></i>
+                    Confirm Password
+                </label>
+                <input type="password" id="confirmPassword" name="ConfirmPassword" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-colors" required />
+                <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.ConfirmPassword)</span>
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-3 px-6 rounded-xl hover:opacity-90 transform transition-all duration-200 hover:scale-[1.02] focus:ring-4 focus:ring-blue-200">
+                Register Now
+            </button>
+        </form>
+
+        <p class="text-center text-gray-600 mt-6">
+            Already have an account?
+            <a href="@Url.Action("Login", "Account", new { area = "Admin" })" class="text-blue-500 hover:text-blue-600 font-medium ml-1">
+                Log in here
+            </a>
+        </p>
+    </div>
+</body>
+</html>

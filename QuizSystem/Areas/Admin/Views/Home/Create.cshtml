@@ -1,0 +1,143 @@
+﻿@using Quiz.Entities.ViewModels
+@model QuizViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎨 Create Fun Quiz! 🎨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script>
+        // Function to add a new question block
+        function addNewQuestion() {
+            const questionContainer = document.getElementById("questions");
+            const questionIndex = questionContainer.children.length;
+
+            const questionBlock = `
+                <div class="bg-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border-2 border-purple-100">
+                    <div class="flex justify-between items-center mb-3 sm:mb-4">
+                        <h3 class="text-lg sm:text-xl font-bold text-purple-600">Question ${questionIndex + 1}</h3>
+                        <span class="text-xl sm:text-2xl">❓</span>
+                    </div>
+
+                    <!-- Question Content -->
+                    <div class="space-y-3 sm:space-y-4">
+                        <input type="text" id="Questions_${questionIndex}__Text" name="Questions[${questionIndex}].Text" placeholder="Enter your question" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none" />
+
+                
+            <!-- Image Upload -->
+            <div class="border-2 border-dashed border-purple-200 rounded-xl p-4 sm:p-6 text-center mb-4">
+                <p class="text-2xl sm:text-3xl text-purple-600 mb-2">🖼️</p>
+                <p class="text-purple-600 font-medium text-sm sm:text-base">Upload an image (optional)</p>
+                <input type="file" name="questionImages" class="hidden" id="QuestionImage${questionIndex}" />
+                <label for="QuestionImage${questionIndex}" class="cursor-pointer text-blue-500">Click to upload</label>
+            </div>
+                        <!-- Answer Options -->
+                        <div class="space-y-2 sm:space-y-3">
+                            ${['A', 'B', 'C', 'D'].map((label, idx) => `
+                                <div class="flex items-center space-x-2 sm:space-x-3">
+                                    <span class="text-xl sm:text-2xl">${label}</span>
+                                    <input type="text" id="Questions_${questionIndex}__Answers_${idx}__Text" name="Questions[${questionIndex}].Answers[${idx}].Text" placeholder="Option ${label}" class="flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none text-sm sm:text-base" />
+                                    <input type="checkbox" id="Questions_${questionIndex}__Answers_${idx}__IsCorrect" name="Questions[${questionIndex}].Answers[${idx}].IsCorrect" value="true" class="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            questionContainer.insertAdjacentHTML('beforeend', questionBlock);
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-400 via-purple-300 to-pink-300 min-h-screen p-4 sm:p-8">
+    <div class="container mx-auto max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-6 sm:mb-8">
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-2 sm:mb-4">
+                ✨ Create Amazing Quiz! ✨
+            </h1>
+            <p class="text-lg sm:text-xl text-white">Make learning fun for our little stars!</p>
+        </div>
+
+        <!-- Quiz Creation Form -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                <!-- Quiz Basic Info -->
+                <div class="mb-6 sm:mb-8">
+                    <label for="Title" class="block text-xl sm:text-2xl font-bold text-purple-600 mb-3 sm:mb-4">
+                        🎯 Quiz Title
+                    </label>
+                    <input type="text" id="Title" name="Title" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none text-base sm:text-lg mb-3 sm:mb-4" />
+                    <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.Title)</span>
+                </div>
+
+                <div class="mb-6 sm:mb-8">
+                    <label for="Description" class="block text-xl sm:text-2xl font-bold text-purple-600 mb-3 sm:mb-4">
+                        🎯 Quiz Description
+                    </label>
+                    <input type="text" id="Description" name="Description" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none text-base sm:text-lg mb-3 sm:mb-4" />
+                    <span class="text-red-500 text-sm">@Html.ValidationMessageFor(model => model.Description)</span>
+                </div>
+
+                <!-- Questions Section -->
+                <div id="questions">
+                    @for (int i = 0; i < Model.Questions.Count; i++)
+                    {
+                        <div class="bg-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border-2 border-purple-100">
+                            <div class="flex justify-between items-center mb-3 sm:mb-4">
+                                <h3 class="text-lg sm:text-xl font-bold text-purple-600">Question @(i + 1)</h3>
+                                <span class="text-xl sm:text-2xl">❓</span>
+                            </div>
+
+                            <!-- Question Content -->
+                            <div class="space-y-3 sm:space-y-4">
+                                <input type="text" id="Questions_@(i)__Text" name="Questions[@i].Text" placeholder="Enter your question" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none" />
+
+                              
+                                <!-- Image Upload -->
+                                <div class="border-2 border-dashed border-purple-200 rounded-xl p-4 sm:p-6 text-center mb-4">
+                                    <p class="text-2xl sm:text-3xl text-purple-600 mb-2">🖼️</p>
+                                    <p class="text-purple-600 font-medium text-sm sm:text-base">Upload an image (optional)</p>
+                                    <input type="file" name="questionImages" class="hidden" id="QuestionImage@(i)" />
+                                    <label for="QuestionImage@(i)" class="cursor-pointer text-blue-500">Click to upload</label>
+                                </div>
+
+                                <!-- Answer Options -->
+                                <div class="space-y-2 sm:space-y-3">
+                                    @for (int j = 0; j < 4; j++)
+                                    {
+                                        <div class="flex items-center space-x-2 sm:space-x-3">
+                                            <span class="text-xl sm:text-2xl">@("ABCD"[j])</span>
+                                            <input type="text" id="Questions_@(i)__Answers_@(j)__Text" name="Questions[@i].Answers[@j].Text" placeholder="Option @(j + 1)" class="flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none text-sm sm:text-base" />
+                                            <input type="checkbox" id="Questions_@(i)__Answers_@(j)__IsCorrect" name="Questions[@i].Answers[@j].IsCorrect" value="true" class="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Add Question Button -->
+                <div class="text-center mb-8">
+                    <button type="button" onclick="addNewQuestion()" class="bg-purple-500 text-white text-lg sm:text-xl px-4 py-3 rounded-full hover:bg-purple-600 transition duration-300">
+                        ➕ Add New Question
+                    </button>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-500 text-white text-lg sm:text-xl px-4 py-3 rounded-full hover:bg-blue-600 transition duration-300">
+                        Create Quiz
+                    </button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

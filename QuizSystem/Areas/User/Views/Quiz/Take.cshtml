@@ -1,0 +1,166 @@
+﻿@using Quiz.Entities.Models
+@model quiz
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="bg-gradient-to-br from-indigo-400 via-purple-300 to-pink-300 min-h-screen">
+    <div class="container mx-auto px-4 py-8 pt-12">
+        <!-- Quiz Title and Description -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-purple-600 mb-4">@Model.Title</h1>
+            <p class="text-lg sm:text-xl text-gray-600">@Model.Description</p>
+        </div>
+
+        <!-- Quiz Form -->
+        <div class="max-w-4xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-lg p-5 sm:p-8 transform transition-all duration-300">
+            <form action="/User/Quiz/SubmitQuiz" method="post" id="quizForm">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <!-- Progress Bar -->
+                <div class="fixed top-0 left-0 w-full h-3 bg-white/30">
+                    <div id="progressBar" class="h-full bg-yellow-400 transition-all duration-500" style="width: 0%"></div>
+                </div>
+
+                <!-- Score Display -->
+                <div class="fixed top-4 right-4 sm:top-6 sm:right-6 bg-white/90 rounded-full px-4 sm:px-6 py-2 shadow-lg">
+                    <span class="text-xl sm:text-2xl">⭐</span>
+                    <span id="score" class="text-lg sm:text-xl font-bold text-purple-600">0</span>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="questionsContainer">
+                    @for (int i = 0; i < Model.Questions.Count; i++)
+                    {
+                        var question = Model.Questions[i];
+                        <div class="question-container text-center mb-6 sm:mb-8" data-index="@i" style="display: none;">
+                            <!-- Question Number -->
+                            <span class="inline-block bg-purple-100 text-purple-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-bold mb-3 sm:mb-4">
+                                Question @(i + 1) of @Model.Questions.Count
+                            </span>
+
+                            <!-- Question Header -->
+                            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4">@question.Text</h2>
+
+                            <!-- Question Image (if any) -->
+                            @if (!string.IsNullOrEmpty(question.Image))
+                            {
+                                <div class="mb-4 sm:mb-6">
+                                    <img src="@question.Image" alt="Question Image" class="rounded-xl sm:rounded-2xl w-full max-w-md mx-auto">
+                                </div>
+                            }
+
+                            <input type="hidden" name="Questions[@i].Id" value="@question.Id" />
+
+                            <!-- Answer Options -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                @foreach (var answer in question.Answers)
+                                {
+                                    <div class="flex items-center space-x-2 sm:space-x-3">
+                                        <input type="radio" name="Questions[@i].SelectedAnswerId" value="@answer.Id" id="answer-@answer.Id" class="form-radio h-5 w-5 text-purple-600 focus:ring focus:ring-purple-300 answer-option" data-question-index="@i" />
+                                        <label for="answer-@answer.Id" class="text-sm sm:text-lg text-gray-700 cursor-pointer">@answer.Text</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Next Button -->
+                <div class="text-center mt-8">
+                    <button type="button" id="nextButton" class="bg-purple-600 text-white text-base sm:text-lg px-5 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-purple-700 transition duration-300 shadow-md">
+                        Next Question
+                    </button>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-8">
+                    <button type="submit" id="submitButton" class="bg-purple-600 text-white text-base sm:text-lg px-5 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-purple-700 transition duration-300 shadow-md" style="display: none;">
+                        Submit Quiz
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const totalQuestions = @Model.Questions.Count;
+    const progressBar = document.getElementById('progressBar');
+    const scoreDisplay = document.getElementById('score');
+    const nextButton = document.getElementById('nextButton');
+    const submitButton = document.getElementById('submitButton');
+    const questionsContainer = document.getElementById('questionsContainer');
+
+    const questionContainers = document.querySelectorAll('.question-container');
+    let currentQuestionIndex = 0;
+    let answeredQuestions = 0;
+    let score = 0;
+
+    // Show the first question
+    questionContainers[currentQuestionIndex].style.display = 'block';
+
+    // Function to update progress and score when an answer is selected
+    function handleAnswerSelection(event) {
+        const questionIndex = event.target.getAttribute('data-question-index');
+
+        // Ensure the question is being answered for the first time
+        const currentQuestionContainer = questionContainers[questionIndex];
+        const isAlreadyAnswered = currentQuestionContainer.getAttribute('data-answered') === 'true';
+
+        if (!isAlreadyAnswered) {
+            // Increment the score (you can add logic here to validate correct answers)
+            score++;
+            answeredQuestions++;
+
+            // Update the progress bar
+            const progress = (answeredQuestions / totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Update the score display
+            scoreDisplay.innerText = score;
+
+            // Mark the question as answered
+            currentQuestionContainer.setAttribute('data-answered', 'true');
+        }
+    }
+
+    // Attach event listeners to all radio buttons
+    const answerOptions = document.querySelectorAll('.answer-option');
+    answerOptions.forEach((option) => {
+        option.addEventListener('change', handleAnswerSelection);
+    });
+
+    // Function to move to the next question
+    nextButton.addEventListener('click', function () {
+        const currentQuestionContainer = questionContainers[currentQuestionIndex];
+
+        // Hide the current question
+        currentQuestionContainer.style.display = 'none';
+
+        // Move to the next question
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < totalQuestions) {
+            // Show the next question
+            questionContainers[currentQuestionIndex].style.display = 'block';
+
+            // Check if it's the last question
+            if (currentQuestionIndex === totalQuestions - 1) {
+                nextButton.innerText = 'Submit Quiz';
+                nextButton.addEventListener('click', function () {
+                    nextButton.style.display = 'none';
+                    submitButton.style.display = 'block';
+                });
+            }
+        } else {
+            // If it's the last question, show the submit button
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'block';
+        }
+    });
+});
+</script>

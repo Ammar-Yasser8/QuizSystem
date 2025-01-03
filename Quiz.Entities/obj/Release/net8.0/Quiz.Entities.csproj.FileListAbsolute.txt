@@ -1,0 +1,14 @@
+F:\QuizSystem\Quiz.Entities\bin\Release\net8.0\Quiz.Entities.deps.json
+F:\QuizSystem\Quiz.Entities\bin\Release\net8.0\Quiz.Entities.runtimeconfig.json
+F:\QuizSystem\Quiz.Entities\bin\Release\net8.0\Quiz.Entities.dll
+F:\QuizSystem\Quiz.Entities\bin\Release\net8.0\Quiz.Entities.pdb
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.csproj.AssemblyReference.cache
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.GeneratedMSBuildEditorConfig.editorconfig
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.AssemblyInfoInputs.cache
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.AssemblyInfo.cs
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.csproj.CoreCompileInputs.cache
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.dll
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\refint\Quiz.Entities.dll
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.pdb
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\Quiz.Entities.genruntimeconfig.cache
+F:\QuizSystem\Quiz.Entities\obj\Release\net8.0\ref\Quiz.Entities.dll

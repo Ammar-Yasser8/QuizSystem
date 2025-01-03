@@ -1,0 +1,17 @@
+F:\QuizSystem\Quiz.DataAccess\bin\Release\net8.0\Quiz.DataAccess.deps.json
+F:\QuizSystem\Quiz.DataAccess\bin\Release\net8.0\Quiz.DataAccess.runtimeconfig.json
+F:\QuizSystem\Quiz.DataAccess\bin\Release\net8.0\Quiz.DataAccess.dll
+F:\QuizSystem\Quiz.DataAccess\bin\Release\net8.0\Quiz.DataAccess.pdb
+F:\QuizSystem\Quiz.DataAccess\bin\Release\net8.0\Quiz.Entities.dll
+F:\QuizSystem\Quiz.DataAccess\bin\Release\net8.0\Quiz.Entities.pdb
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.csproj.AssemblyReference.cache
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.AssemblyInfoInputs.cache
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.AssemblyInfo.cs
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.csproj.CoreCompileInputs.cache
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.Dat.98F34748.Up2Date
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.dll
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\refint\Quiz.DataAccess.dll
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.pdb
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\Quiz.DataAccess.genruntimeconfig.cache
+F:\QuizSystem\Quiz.DataAccess\obj\Release\net8.0\ref\Quiz.DataAccess.dll

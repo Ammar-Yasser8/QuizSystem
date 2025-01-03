@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Dashboard - KidsLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-600 text-white p-6">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold">KidsLearn</h1>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="#" class="block py-2.5 px-4 rounded bg-indigo-700 text-white">Dashboard</a>
+                <a href="#" class="block py-2.5 px-4 rounded hover:bg-indigo-700">Quizzes</a>
+                <a href="#" class="block py-2.5 px-4 rounded hover:bg-indigo-700">Students</a>
+                <a href="#" class="block py-2.5 px-4 rounded hover:bg-indigo-700">Reports</a>
+                <a href="index.html" class="block py-2.5 px-4 rounded hover:bg-indigo-700">log out</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Quiz Management</h2>
+                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Create New Quiz
+                </button>
+            </div>
+
+            <!-- Quiz Cards -->
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>
